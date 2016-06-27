@@ -77,7 +77,8 @@ template<class type> class polynomial {
             {
                 for(typename std::vector<type>::size_type j = 0;j < s2;j++)
                 {
-                    ret.set(i + j, this->get(i) * other.get(j));
+                    double tmp = ret.get(i + j);
+                    ret.set(i + j, tmp + this->get(i) * other.get(j));
                 }
             }
 
