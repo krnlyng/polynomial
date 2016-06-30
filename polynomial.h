@@ -52,6 +52,28 @@ template<class type> class polynomial {
             return ret;
         }
 
+        polynomial operator+(const type &other) const
+        {
+            polynomial ret = *this;
+
+            ret.set(0, ret.get(0) + other);
+
+            ret.resize();
+
+            return ret;
+        }
+
+        friend polynomial operator+(const type &lhs, const polynomial &rhs)
+        {
+            polynomial ret = rhs;
+
+            ret.set(0, lhs + ret.get(0));
+
+            ret.resize();
+
+            return ret;
+        }
+
         polynomial operator-(const polynomial &other) const
         {
             polynomial ret;
@@ -61,6 +83,28 @@ template<class type> class polynomial {
             {
                 ret.set(i, this->get(i) - other.get(i));
             }
+
+            ret.resize();
+
+            return ret;
+        }
+
+        polynomial operator-(const type &other) const
+        {
+            polynomial ret = *this;
+
+            ret.set(0, ret.get(0) - other);
+
+            ret.resize();
+
+            return ret;
+        }
+
+        friend polynomial operator-(const type &lhs, const polynomial &rhs)
+        {
+            polynomial ret = rhs;
+
+            ret.set(0, lhs - ret.get(0));
 
             ret.resize();
 
@@ -80,6 +124,36 @@ template<class type> class polynomial {
                     double tmp = ret.get(i + j);
                     ret.set(i + j, tmp + this->get(i) * other.get(j));
                 }
+            }
+
+            ret.resize();
+
+            return ret;
+        }
+
+        polynomial operator*(const type &other) const
+        {
+            polynomial ret;
+
+            typename std::vector<type>::size_type s1 = degree() + 1;
+            for(typename std::vector<type>::size_type i = 0;i < s1;i++)
+            {
+                ret.set(i, this->get(i) * other);
+            }
+
+            ret.resize();
+
+            return ret;
+        }
+
+        friend polynomial operator*(const type &lhs, const polynomial &rhs)
+        {
+            polynomial ret;
+
+            typename std::vector<type>::size_type s1 = rhs.degree() + 1;
+            for(typename std::vector<type>::size_type i = 0;i < s1;i++)
+            {
+                ret.set(i, lhs * rhs.get(i));
             }
 
             ret.resize();

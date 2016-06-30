@@ -19,18 +19,17 @@ int main(int argc, char *argv[])
     expansion_points.push_back(2.f);
     expansion_points.push_back(1.f);
     expansion_points.push_back(-1.f);
-    expansion_points.push_back(25.f);
-    expansion_points.push_back(-25.f);
+    expansion_points.push_back(5.f);
+    expansion_points.push_back(-3.f);
     expansion_points.push_back(5.f);
 
     polynomial<double> d = a;
     polynomial<double> result;
     for(vector<double>::size_type i = 0;i < expansion_points.size();i++)
     {
-        polynomial<double> e = d.eval_at(expansion_points[i]);
+        double e = d.eval_at(expansion_points[i]);
 
-        polynomial<double> tmp;
-        tmp.set(0, 1.f);
+        polynomial<double> tmp = 1.f;
         for(vector<double>::size_type j = 0;j < i;j++)
         {
             tmp = tmp.indefinite_integral() - tmp.indefinite_integral().eval_at(expansion_points[i-j - 1]);
